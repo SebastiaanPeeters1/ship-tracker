@@ -1,0 +1,26 @@
+{
+  "name": "ship-tracker-api",
+  "version": "1.0.0",
+  "description": "Backend proxy for AISStream API - solves CORS issues",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "ship-tracking",
+    "ais",
+    "maritime",
+    "api-proxy"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "node-fetch": "^3.3.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
