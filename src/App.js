@@ -16,20 +16,14 @@ export default async function handler(req, res) {
   try {
     const { apiKey } = req.body;
 
-    console.log('Received request with API key:', apiKey ? apiKey.substring(0, 8) + '...' : 'NO KEY');
-
     if (!apiKey) {
-      console.log('ERROR: No API key provided');
       return res.status(400).json({ error: 'API key required' });
     }
 
-    console.log('Calling AISStream...');
-    
     const response = await fetch('https://aisstream.io/v0/stream', {
       method: 'POST',
       headers: { 
-        'Content-Type': 'application/json',
-        'User-Agent': 'Ship-Tracker-App'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         APIkey: apiKey,
@@ -40,25 +34,16 @@ export default async function handler(req, res) {
       })
     });
 
-    console.log('AISStream response status:', response.status);
-    
-    const responseText = await response.text();
-    console.log('AISStream response:', responseText.substring(0, 200));
-
     if (!response.ok) {
-      console.log('ERROR: AISStream returned', response.status);
       return res.status(response.status).json({ 
-        error: `AISStream error: ${response.status}`,
-        details: responseText.substring(0, 200)
+        error: `AISStream returned ${response.status}`
       });
     }
 
-    const data = JSON.parse(responseText);
-    console.log('SUCCESS: Got data from AISStream');
+    const data = await response.json();
     return res.status(200).json(data);
 
   } catch (error) {
-    console.error('ERROR in handler:', error.message);
     return res.status(500).json({ error: error.message });
   }
 }
