@@ -22,7 +22,9 @@ export default async function handler(req, res) {
 
     const response = await fetch('https://aisstream.io/v0/stream', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         APIkey: apiKey,
         BoundingBox: [
@@ -33,7 +35,9 @@ export default async function handler(req, res) {
     });
 
     if (!response.ok) {
-      return res.status(response.status).json({ error: `AISStream error: ${response.status}` });
+      return res.status(response.status).json({ 
+        error: `AISStream returned ${response.status}`
+      });
     }
 
     const data = await response.json();
